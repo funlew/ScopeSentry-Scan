@@ -1,0 +1,7 @@
+# 覆盖文件：强制以 linux/amd64 运行 scan 服务
+# 用途：tools/linux 下的外置扫描器只有 x86-64 版本，需要完整插件链路时使用。
+# 代价：Apple Silicon 上走 qemu 模拟，编译与运行都明显变慢。
+# 用法：docker compose -f docker-compose.dev.yml -f docker-compose.dev-amd64.yml up --build
+services:
+  scan:
+    platform: linux/amd64

@@ -1,0 +1,27 @@
+# air 热重载配置，仅用于本地开发（Dockerfile.dev）
+# 二进制固定输出到 /apps/ScopeSentry-Scan：
+# 程序以 os.Args[0] 所在目录为运行根，放别处会导致 config/data/ext 跑到临时目录。
+root = "."
+tmp_dir = "/apps/.air-tmp"
+
+[build]
+  cmd = "go build -o /apps/ScopeSentry-Scan ./cmd/ScopeSentry/main.go"
+  bin = "/apps/ScopeSentry-Scan"
+  full_bin = "/apps/ScopeSentry-Scan"
+  delay = 1000
+  stop_on_error = true
+  send_interrupt = true
+  kill_delay = "3s"
+  exclude_unchanged = true
+  include_ext = ["go", "yaml", "yml", "ttc"]
+  exclude_regex = ["_test\\.go"]
+  # libs 为上游 fork，改动频率低且文件量大，排除以降低监听开销；
+  # 需要时改完执行 docker compose -f docker-compose.dev.yml restart scan
+  exclude_dir = [
+    "libs", "dist", "tools", "test", "docs", "build",
+    "data", "plugin", "dictionaries", "poc", "ext", "tmp",
+    ".git", ".idea", ".dev-data"
+  ]
+
+[log]
+  time = true

@@ -1,0 +1,17 @@
+# 构建上下文瘦身；注意不要排除 dist/ 与 tools/linux，
+# 线上镜像 dockerfile 依赖这两处产物。
+.git
+.github
+.idea
+docs
+test
+data
+plugin
+dictionaries
+poc
+tmp
+tools/win
+tools/darwin
+.dev-data
+*.log
+ISSUES-LOCAL-DEV.md
